@@ -1,0 +1,36 @@
+extends layout
+
+block layout-content
+
+  div.View
+    h1.Banner CodeAcademy
+    div.Message
+      div.Title
+        h3 Best Code School
+        h1 Our Teachers
+
+    div.NavButtons
+
+        p
+        table(style='width:30%' border='1')
+          tr
+            th Surname
+            th Students
+              each val,id in teachersStudents
+                tr
+                    td= val.teacherSurname
+                    td= val.surname        
+        p
+        | Teacher: 
+        select#selTeacher
+            each val in teachers    
+                option(value=val._id ) #{val.surname}
+        |  Student: 
+        select#selStudent
+            each val in students    
+                option(value=val._id) #{val.surname}
+        p
+        button#submit Assign
+         
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous')
+    script(src='js/assign.js')
