@@ -4,7 +4,7 @@ import { json } from "body-parser"
 import { academyRouter } from "./routes/academy"
 import * as path from "path"
 const swaggerUi = require("swagger-ui-express")
-const swaggerFile = require("./CodeAcademytest.json")
+const swaggerFile = require("./CodeAcademySwagger.json")
 
 const app = express()
 app.use(json())
@@ -13,7 +13,7 @@ app.use(academyRouter)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 mongoose.connect(
-  "mongodb+srv://login:pass@cluster0.axhjt.mongodb.net/codeAcademy?authSource=admin&replicaSet=atlas-wbhxry-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true",
+  "mongodb://localhost:27017/myapp",
   {
     useNewUrlParser: true,
     useCreateIndex: true,

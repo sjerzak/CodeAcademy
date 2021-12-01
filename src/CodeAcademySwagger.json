@@ -48,8 +48,8 @@
         "responses": { "200": { "description": "", "headers": {} } }
       },
       "post": {
-        "summary": "Assign Student",
-        "operationId": "AssignStudent",
+        "summary": "Add Student",
+        "operationId": "AddStudent",
         "responses": { "200": { "description": "", "headers": {} } },
         "requestBody": {
           "required": true,

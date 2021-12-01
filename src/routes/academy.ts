@@ -125,28 +125,44 @@ router.delete("/api/teachers/:id", async (req: Request, res: Response) => {
     )
   )["_id"]
 
-  for (let i = 0; i < Object(teacherDel)["teacherStudents"].length; i++) {
-    await Teachers.findOneAndUpdate(
-      { _id: moveToTeacherId },
-      {
-        $addToSet: {
-          teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
-        },
-      },
-      { new: true }
-    )
+  if (moveToTeacherId) {
+    console.log("Udało się")
 
-    await Teachers.findOneAndUpdate(
-      { _id: Object(teacherDel)["_id"] },
-      {
-        $pullAll: {
-          teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
+    for (let i = 0; i < Object(teacherDel)["teacherStudents"].length; i++) {
+      await Teachers.findOneAndUpdate(
+        { _id: moveToTeacherId },
+        {
+          $addToSet: {
+            teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
+          },
         },
-      }
-    )
+        { new: true }
+      )
+
+      await Teachers.findOneAndUpdate(
+        { _id: Object(teacherDel)["_id"] },
+        {
+          $pullAll: {
+            teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
+          },
+        }
+      )
+    }
+    await Teachers.deleteOne({ _id: Object(teacherDel)["_id"] })
+    return res.status(201).send("Nauczyciel usunięty")
+  } else {
+    let error =
+      "Brak nauczyciela z wystarczającą ilością wolnych miejsc, zatrudnij nowego :)"
+    let sumFreeSpaces = 0
+    teachers.forEach(function (teacher) {
+      return (sumFreeSpaces =
+        Object(teacher)["studCapacity"] -
+        Object(teacher)["teacherStudents"].length +
+        sumFreeSpaces)
+    })
+    console.log(sumFreeSpaces)
+    return res.status(404).send(error)
   }
-  await Teachers.deleteOne({ _id: Object(teacherDel)["_id"] })
-  return res.status(201).send()
 })
 
 router.get("/api/students", async (req: Request, res: Response) => {
