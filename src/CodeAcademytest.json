@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    { "url": "http://127.0.0.1:3000", "description": "", "variables": {} }
+  ],
+  "info": {
+    "version": "a2793425-2a4a-4abe-bca9-148b46d64168",
+    "title": "CodeAcademy",
+    "description": "",
+    "termsOfService": "",
+    "contact": {},
+    "license": { "name": "" }
+  },
+  "paths": {
+    "/api/teachers": {
+      "get": {
+        "summary": "Get Teachers",
+        "operationId": "GetTeachers",
+        "parameters": [],
+        "responses": { "200": { "description": "", "headers": {} } }
+      },
+      "post": {
+        "summary": "Add Teacher",
+        "operationId": "AddTeacher",
+        "responses": { "200": { "description": "", "headers": {} } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "surname": "TeacherSurname",
+                  "studCapacity": 5,
+                  "teacherStudents": [""]
+                }
+              },
+              "example": "{\n    \"surname\": \"Teachersurname\",\n    \"studCapacity\": 5,\n    \"teacherStudents\" : [\"\"]\n}"
+            }
+          }
+        }
+      }
+    },
+    "/api/students": {
+      "get": {
+        "summary": "Get Students",
+        "operationId": "GetStudents",
+        "parameters": [],
+        "responses": { "200": { "description": "", "headers": {} } }
+      },
+      "post": {
+        "summary": "Assign Student",
+        "operationId": "AssignStudent",
+        "responses": { "200": { "description": "", "headers": {} } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": { "surname": "StudentSurname" }
+              },
+              "example": "{\n    \"surname\": \"StudentSurname\"\n}"
+            }
+          }
+        }
+      }
+    },
+    "/api/teachers/{TeacherId}": {
+      "delete": {
+        "summary": "Delete teacher",
+        "parameters": [
+          {
+            "name": "TeacherID",
+            "in": "path",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "example": "6198e36537ded5405b4bc089"
+            }
+          }
+        ],
+        "operationId": "Deleteteacher",
+        "responses": { "200": { "description": "", "headers": {} } }
+      }
+    },
+    "/api/teachers/{TeacherID}/assignstudent": {
+      "patch": {
+        "summary": "Assign student to teacher",
+        "parameters": [
+          {
+            "name": "TeacherID",
+            "in": "path",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "example": "6198e36537ded5405b4bc089"
+            }
+          }
+        ],
+        "operationId": "Assignstudenttoteacher",
+        "responses": { "200": { "description": "", "headers": {} } },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": { "studId": "6198e133ebaebc384d56fce8" }
+              },
+              "example": "{\n   \"studId\": \"6198e133ebaebc384d56fce8\"\n}"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "title": {
+        "name": "title",
+        "in": "query",
+        "required": true,
+        "style": "form",
+        "schema": { "type": "string", "example": "a" }
+      },
+      "description": {
+        "name": "description",
+        "in": "query",
+        "required": true,
+        "style": "form",
+        "schema": { "type": "string", "example": "x" }
+      }
+    }
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": { "url": "", "description": "" },
+  "warnings": []
+}

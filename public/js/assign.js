@@ -8,7 +8,7 @@ $(document)
 
       const data = { studId: studentId }
       $.ajax({
-        url: `/api/teachers/${teacherId}/addstudent`,
+        url: `/api/teachers/${teacherId}/assignstudent`,
         data: JSON.stringify(data),
         type: "PATCH",
         contentType: "application/json",

@@ -68,7 +68,7 @@ router.get("/assign", async (req: Request, res: Response) => {
 })
 
 router.patch(
-  "/api/teachers/:id/addstudent",
+  "/api/teachers/:id/assignstudent",
   async (req: Request, res: Response) => {
     const { studId } = req.body
 

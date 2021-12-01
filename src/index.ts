@@ -3,10 +3,14 @@ import mongoose from "mongoose"
 import { json } from "body-parser"
 import { academyRouter } from "./routes/academy"
 import * as path from "path"
+const swaggerUi = require("swagger-ui-express")
+const swaggerFile = require("./CodeAcademytest.json")
 
 const app = express()
 app.use(json())
 app.use(academyRouter)
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 mongoose.connect(
   "",
