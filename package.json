@@ -5,12 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/src/index.js",
-    "postinstall": "tsc",
+    "postinstall": "tsc && mv -i -v public dist/ && rm -v -rf src",
     "watch-node": "nodemon dist/src/index.js",
     "watch-ts": "tsc -w",
     "deploy": "git add * && git commit -m Heroku && git push heroku main"
   },
-  "postinstall": "tsc && mv -i -v public dist/ && rm -v -rf src",
   "keywords": [],
   "author": "",
   "license": "ISC",
