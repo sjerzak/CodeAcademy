@@ -4,7 +4,7 @@ import { json } from "body-parser"
 import { academyRouter } from "./routes/academy"
 import * as path from "path"
 const swaggerUi = require("swagger-ui-express")
-const swaggerFile = require("./CodeAcademySwagger.json")
+const swaggerFile = require("../public/CodeAcademySwagger.json")
 
 const app = express()
 app.use(json())
