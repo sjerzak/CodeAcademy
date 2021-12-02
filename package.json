@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start": "node dist/index.js",
+    "postinstall": "tsc",
+    "watch-node": "nodemon dist/index.js",
+    "watch-ts": "tsc -w",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +28,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.13",
     "pug": "^3.0.2",
-    "swagger-ui-express": "^4.2.0",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^3.9.10"
+    "swagger-ui-express": "^4.2.0"
+  },
+  "engines": {
+    "node": "12.22.4"
   }
 }
