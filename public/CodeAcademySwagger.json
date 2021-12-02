@@ -68,15 +68,14 @@
         }
       }
     },
-    "/api/teachers/{TeacherId}": {
+    "/api/teachers/{delTeacherId}": {
       "delete": {
         "summary": "Delete teacher",
         "parameters": [
           {
-            "name": "TeacherID",
+            "name": "delTeacherId",
             "in": "path",
             "required": true,
-            "style": "form",
             "schema": {
               "type": "string",
               "example": "6198e36537ded5405b4bc089"
@@ -95,7 +94,6 @@
             "name": "TeacherID",
             "in": "path",
             "required": true,
-            "style": "form",
             "schema": {
               "type": "string",
               "example": "6198e36537ded5405b4bc089"
