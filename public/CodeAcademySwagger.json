@@ -107,7 +107,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "string",
                 "example": { "studId": "6198e133ebaebc384d56fce8" }
               },
               "example": "{\n   \"studId\": \"6198e133ebaebc384d56fce8\"\n}"
