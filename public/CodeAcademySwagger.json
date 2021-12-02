@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "servers": [
     {
-      "url": "https://git.heroku.com/swarmcheckcodeacademy.git",
+      "url": "https://swarmcheckcodeacademy.herokuapp.com",
       "description": "",
       "variables": {}
     }
