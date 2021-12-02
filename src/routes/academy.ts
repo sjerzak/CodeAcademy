@@ -113,12 +113,13 @@ router.patch("/api/teachers/:id", async (req: Request, res: Response) => {
 })
 
 router.delete("/api/teachers/:id", async (req: Request, res: Response) => {
+  console.log(req.url)
   const filter = { _id: req.params.id }
   let teacherDel = await Teachers.findOne(filter)
   let teachers = await Teachers.find().select(
     "teacherStudents studCapacity _id"
   )
-
+  console.log("test")
   let moveToTeacherId = Object(
     teachers.find(
       (element) =>
