@@ -11,6 +11,10 @@ router.use(
   })
 )
 
+router.get("/", async (req: Request, res: Response) => {
+  return res.status(200).render("appView")
+})
+
 router.get("/api/teachers", async (req: Request, res: Response) => {
   const teachers: object = await Teachers.find({})
   return res.status(200).send(teachers)
