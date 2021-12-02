@@ -13,7 +13,7 @@ app.use(academyRouter)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 mongoose.connect(
-  `mongodb+srv://${process.env.MongoUsername}:${process.env.MongoPass}@cluster0.axhjt.mongodb.net/natours?authSource=admin&replicaSet=atlas-wbhxry-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true`,
+  `mongodb+srv://${process.env.MongoUsername}:${process.env.MongoPass}@cluster0.axhjt.mongodb.net/CodeAcademy?authSource=admin&replicaSet=atlas-wbhxry-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true`,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
