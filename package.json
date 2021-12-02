@@ -8,7 +8,7 @@
     "postinstall": "tsc",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "deploy": "git add * && git commit -m Heroku && git push heroku master"
   },
   "postinstall": "tsc && mv -i -v public dist/ && rm -v -rf src",
   "keywords": [],
