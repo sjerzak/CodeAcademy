@@ -43,7 +43,7 @@ router.post("/api/teachers", async (req: Request, res: Response) => {
   } catch (e) {
     const error =
       "Teacher surname must be unique, letter only, more or equal 3 chars. Student capacity must be a positive digit"
-    return res.status(404).send(error)
+    return res.status(404).send(e)
   }
 })
 
@@ -76,13 +76,16 @@ router.patch(
   async (req: Request, res: Response) => {
     const { studId } = req.body
 
-    const teacherStudLimit = await Teachers.findOne({
+    // const teacherStudLimit = await Teachers.findOne({
+    //   _id: req.params.id,
+    // }).select("studCapacity teacherStudents -_id")
+    const teacherStudLimit: any = await Teachers.findOne({
       _id: req.params.id,
-    }).select("studCapacity teacherStudents -_id")
+    })
 
-    const limit = Object(teacherStudLimit)["studCapacity"]
-    const currentStudents = Object(teacherStudLimit)["teacherStudents"].length
-
+    const limit = teacherStudLimit.studCapacity
+    const currentStudents = teacherStudLimit.teacherStudents.length
+    console.log(limit)
     const error = "Teacher student's limit capped"
     if (currentStudents < limit) {
       await Teachers.updateMany({ $pull: { teacherStudents: studId } })
