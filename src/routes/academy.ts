@@ -79,13 +79,17 @@ router.patch(
     // const teacherStudLimit = await Teachers.findOne({
     //   _id: req.params.id,
     // }).select("studCapacity teacherStudents -_id")
+
     const teacherStudLimit: any = await Teachers.findOne({
       _id: req.params.id,
     })
 
     const limit = teacherStudLimit.studCapacity
     const currentStudents = teacherStudLimit.teacherStudents.length
-    console.log(limit)
+
+    // const limit = Object(teacherStudLimit)["studCapacity"]
+    // const currentStudents = Object(teacherStudLimit)["teacherStudents"].length
+
     const error = "Teacher student's limit capped"
     if (currentStudents < limit) {
       await Teachers.updateMany({ $pull: { teacherStudents: studId } })
