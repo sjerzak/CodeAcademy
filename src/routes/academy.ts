@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express"
 import { Teachers, Students } from "../../models/academy"
-import mongoose from "mongoose"
+import mongoose, { MongooseQueryOptions } from "mongoose"
 
 const router = express.Router()
 mongoose.set("useFindAndModify", false)
@@ -29,21 +29,19 @@ router.get("/teachers", async (req: Request, res: Response) => {
 })
 
 router.post("/api/teachers", async (req: Request, res: Response) => {
-  const { surname, studCapacity, teacherStudents } = req.body
-
   try {
-    const teachers = Teachers.build({
+    const { surname, studCapacity, teacherStudents } = req.body
+    const teachers = await Teachers.create({
       surname,
       studCapacity,
       teacherStudents,
     })
-    await teachers.save()
 
     return res.status(201).send(teachers)
   } catch (e) {
     const error =
       "Teacher surname must be unique, letter only, more or equal 3 chars. Student capacity must be a positive digit"
-    return res.status(404).send(e)
+    return res.status(404).send(error)
   }
 })
 
@@ -120,19 +118,18 @@ router.patch("/api/teachers/:id", async (req: Request, res: Response) => {
 })
 
 router.delete("/api/teachers/:id", async (req: Request, res: Response) => {
-  console.log(req.url)
   const filter = { _id: req.params.id }
-  let teacherDel = await Teachers.findOne(filter)
+  let teacherDel: any = await Teachers.findOne(filter)
   let teachers = await Teachers.find().select(
     "teacherStudents studCapacity _id"
   )
-  console.log("test")
+
   let moveToTeacherId = Object(
     teachers.find(
       (element) =>
-        Object(element)["studCapacity"] -
-          Object(element)["teacherStudents"].length -
-          Object(teacherDel)["teacherStudents"].length >=
+        element.studCapacity -
+          element.teacherStudents.length -
+          teacherDel.teacherStudents.length >=
         0
     )
   )["_id"]
@@ -140,27 +137,29 @@ router.delete("/api/teachers/:id", async (req: Request, res: Response) => {
   if (moveToTeacherId) {
     console.log("Udało się")
 
-    for (let i = 0; i < Object(teacherDel)["teacherStudents"].length; i++) {
+    for (let i = 0; i < teacherDel.teacherStudents.length; i++) {
       await Teachers.findOneAndUpdate(
         { _id: moveToTeacherId },
         {
           $addToSet: {
-            teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
+            teacherStudents: teacherDel.teacherStudents[i],
           },
         },
         { new: true }
       )
 
       await Teachers.findOneAndUpdate(
-        { _id: Object(teacherDel)["_id"] },
+        { _id: teacherDel._id },
         {
-          $pullAll: {
-            teacherStudents: [Object(teacherDel)["teacherStudents"][i]],
-          },
+          $pullAll: [
+            {
+              teacherStudents: teacherDel.teacherStudents[i],
+            },
+          ],
         }
       )
     }
-    await Teachers.deleteOne({ _id: Object(teacherDel)["_id"] })
+    await Teachers.deleteOne({ _id: teacherDel._id })
     return res.status(201).send("Nauczyciel usunięty")
   } else {
     let error =
@@ -168,9 +167,7 @@ router.delete("/api/teachers/:id", async (req: Request, res: Response) => {
     let sumFreeSpaces = 0
     teachers.forEach(function (teacher) {
       return (sumFreeSpaces =
-        Object(teacher)["studCapacity"] -
-        Object(teacher)["teacherStudents"].length +
-        sumFreeSpaces)
+        teacher.studCapacity - teacher.teacherStudents.length + sumFreeSpaces)
     })
     console.log(sumFreeSpaces)
     return res.status(404).send(error)
@@ -194,8 +191,8 @@ router.post("/api/students", async (req: Request, res: Response) => {
   try {
     const { surname } = req.body
 
-    const students = Students.build({ surname })
-    await students.save()
+    const students = await Students.create({ surname })
+
     return res.status(201).send(students)
   } catch (e) {
     const error =
